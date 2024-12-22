@@ -1,0 +1,52 @@
+"https://codeforces.com/contest/2051/problem/C"
+
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m, k;
+        cin >> n >> m >> k;
+
+        vector<int> a(m);
+        for (int i = 0; i < m; i++) {
+            cin >> a[i];
+        }
+
+        vector<bool> knows(n + 1, false);
+        for (int i = 0; i < k; ++i) {
+            int q;
+            cin >> q;
+            knows[q] = true;
+        }
+
+        string result;
+        for (int i = 0; i < m; i++) {
+            int excluded = a[i];
+            bool passes = true;
+
+            for (int j = 1; j <= n; j++) {
+                if (j != excluded && !knows[j]) {
+                    passes = false;
+                    break;
+                }
+            }
+            
+            
+            if(passes == true){
+                result = result + '1';
+            }
+            else{
+                result = result + '0';
+            }
+        }
+
+        cout << result << endl;
+    }
+
+    return 0;
+}
