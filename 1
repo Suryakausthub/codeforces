@@ -1,0 +1,58 @@
+https://codeforces.com/problemset/problem/1775/B
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n;
+        cin >> n;
+
+        vector<vector<int>> seq(n);
+
+        for (int i = 0; i < n; ++i) {
+            int len;
+            cin >> len;
+            seq[i].resize(len);
+            for (int j = 0; j < len; ++j) {
+                cin >> seq[i][j];
+            }
+        }
+
+        bool found = false;
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i != j) {
+                    auto it = seq[j].begin();
+                    bool issub = true;
+
+                    for (int element : seq[i]) {
+                        it = find(it, seq[j].end(), element);
+                        if (it == seq[j].end()) {
+                            issub = false;
+                            break;
+                        }
+                        ++it;
+                    }
+
+                    if (issub) {
+                        found = true;
+                        break; 
+                    }
+                }
+            }
+            if (found) break;
+        }
+
+        cout << (found ? "true" : "false") << endl;
+    }
+
+    return 0;
+}
