@@ -1,0 +1,31 @@
+https://codeforces.com/contest/2051/problem/B
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        long long n, a, b, c;
+        cin >> n >> a >> b >> c;
+        long long total = a + b + c;
+        long long c = n / total;
+        long long r = n - (c * total);
+        int count = 0;
+        if (r > 0) {
+            r -= a;
+            count++;
+        }
+        if (r > 0) {
+            r -= b;
+            count++;
+        }
+        if (r > 0) {
+            r -= c;
+            count++;
+        }
+        cout << (c * 3) + count << endl;
+    }
+    return 0;
+}
