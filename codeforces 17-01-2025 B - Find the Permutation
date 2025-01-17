@@ -1,0 +1,77 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+#define FAST ios_base::sync_with_stdio(false);
+#define FAST_INPUT cin.tie(0);
+#define FAST_OUTPUT cout.tie(0);
+
+vector<string> g;
+
+// Function to initialize the graph input
+void initializeGraph(int n) {
+    g.resize(n);
+    for (int i = 0; i < n; i++) {
+        cin >> g[i];
+    }
+}
+
+// Function to initialize the permutation vector
+void initializePermutation(int n, vector<int> &p) {
+    p.resize(n);
+    for (int i = 0; i < n; i++) {
+        p[i] = i;
+    }
+}
+
+// Comparator function for sorting
+bool cmp(int u, int v) {
+    if (u < v) {
+        return g[u][v] == '1';
+    }
+    return g[v][u] == '0';
+}
+
+// Function to sort the permutation vector
+void sortPermutation(vector<int> &p) {
+    sort(p.begin(), p.end(), cmp);
+}
+
+// Function to output the sorted permutation
+void outputPermutation(const vector<int> &p) {
+    for (int i = 0; i < p.size(); i++) {
+        cout << p[i] + 1;
+        if (i + 1 != p.size()) {
+            cout << " ";
+        }
+    }
+    cout << endl;
+}
+
+int main() {
+    FAST;
+    FAST_INPUT;
+    FAST_OUTPUT;
+
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n;
+        cin >> n;
+
+        // Step 1: Initialize the graph
+        initializeGraph(n);
+
+        // Step 2: Initialize the permutation vector
+        vector<int> p;
+        initializePermutation(n, p);
+
+        // Step 3: Sort the permutation vector
+        sortPermutation(p);
+
+        // Step 4: Output the sorted permutation
+        outputPermutation(p);
+    }
+
+    return 0;
+}
