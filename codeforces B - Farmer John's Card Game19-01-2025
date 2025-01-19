@@ -1,0 +1,65 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+void processTestCase(int n, int m, vector<vector<int>> &cards) {
+    vector<pair<int, int>> smallestCards; // {smallest_card, cow_index}
+
+    for (int i = 0; i < n; ++i) {
+        sort(cards[i].begin(), cards[i].end());
+        smallestCards.push_back({cards[i][0], i});
+    }
+
+    // Sort cows based on their smallest card
+    sort(smallestCards.begin(), smallestCards.end());
+
+    vector<int> order;
+    for (auto &[_, index] : smallestCards) {
+        order.push_back(index);
+    }
+
+    int topCard = -1;
+    vector<int> indices(n, 0);
+
+    for (int round = 0; round < m; ++round) {
+        for (int cow : order) {
+            while (indices[cow] < m && cards[cow][indices[cow]] <= topCard) {
+                indices[cow]++;
+            }
+            if (indices[cow] >= m) {
+                cout << -1 << endl;
+                return;
+            }
+            topCard = cards[cow][indices[cow]];
+            indices[cow]++;
+        }
+    }
+
+    for (int cow : order) {
+        cout << cow + 1 << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    int t;
+    cin >> t;
+
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
+
+        vector<vector<int>> cards(n, vector<int>(m));
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                cin >> cards[i][j];
+            }
+        }
+
+        processTestCase(n, m, cards);
+    }
+
+    return 0;
+}
+
