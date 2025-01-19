@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+// Function to read the input data
+void readInput(int &t, vector<vector<int>> &testCases) {
+    cin >> t;
+    testCases.resize(t, vector<int>(4));
+    for (int i = 0; i < t; ++i) {
+        for (int j = 0; j < 4; ++j) {
+            cin >> testCases[i][j];
+        }
+    }
+}
+
+// Function to calculate the Fibonacciness for a given array and a3
+int calculateFibonacciness(int a1, int a2, int a3, int a4, int a5) {
+    int count = 0;
+    if (a3 == a1 + a2) count++;
+    if (a4 == a2 + a3) count++;
+    if (a5 == a3 + a4) count++;
+    return count;
+}
+
+// Function to find the maximum Fibonacciness by varying a3
+int findMaxFibonacciness(const vector<int> &testCase) {
+    int a1 = testCase[0], a2 = testCase[1], a4 = testCase[2], a5 = testCase[3];
+    int maxFibonacciness = 0;
+
+    for (int a3 = -200; a3 <= 200; ++a3) {
+        maxFibonacciness = max(maxFibonacciness, calculateFibonacciness(a1, a2, a3, a4, a5));
+    }
+
+    return maxFibonacciness;
+}
+
+// Function to process all test cases and print the results
+void processTestCases(int t, const vector<vector<int>> &testCases) {
+    for (int i = 0; i < t; ++i) {
+        cout << findMaxFibonacciness(testCases[i]) << endl;
+    }
+}
+
+int main() {
+    int t;
+    vector<vector<int>> testCases;
+
+    // Read input
+    readInput(t, testCases);
+
+    // Process and output results
+    processTestCases(t, testCases);
+
+    return 0;
+}
