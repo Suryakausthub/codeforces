@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+#include <unordered_map>
+using namespace std;
+
+void solve() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, k;
+        cin >> n >> k;
+
+        vector<int> x(n);
+        unordered_map<int, int> freq;
+        for (int i = 0; i < n; ++i) {
+            cin >> x[i];
+            freq[x[i]]++;
+        }
+
+        int score = 0;
+
+        for (const auto &entry : freq) {
+            int a = entry.first, countA = entry.second;
+            int b = k - a;
+
+            if (freq.count(b)) {
+                int countB = freq[b];
+                if (a == b) {
+                    score += countA / 2;  // Pairing within the same group
+                } else if (freq[a] > 0 && freq[b] > 0) {
+                    int pairs = min(countA, countB);
+                    score += pairs;
+                    freq[a] -= pairs;
+                    freq[b] -= pairs;
+                }
+            }
+        }
+
+        cout << score << endl;
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    solve();
+    return 0;
+}
